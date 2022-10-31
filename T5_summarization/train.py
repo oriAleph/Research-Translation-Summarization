@@ -40,7 +40,9 @@ def my_tokenize(model_checkpoint, dataset, subset):
 def get_model(model_checkpoint, tokenizer):
   #make a model that is not pre-trained
   config = AutoConfig.from_pretrained(model_checkpoint)
-  model = T5Model(config)
+  #model = T5Model(config)
+  model = AutoModelForSeq2SeqLM.from_config(config)
+  model.init_weights()
 
   data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=model)
   return (model, data_collator)
